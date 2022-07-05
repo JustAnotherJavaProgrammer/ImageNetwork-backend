@@ -2,6 +2,8 @@ package de.lukas.imagenetwork.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -16,10 +18,13 @@ public class User {
     private String email;
     private String nickname;
     private String password; // TODO: Don't save password as plaintext
-    private Boolean deleted;
     @Column(name="createdat")
     private Instant createdAt;
     @Column(name="updatedat")
     private Instant updatedAt;
 
+//    @Type(type = "org.hibernate.type.NumericBooleanType")
+//    @Column(columnDefinition = "deleted BOOLEAN DEFAULT FALSE", nullable = false)
+//    @ColumnDefault(value = "FALSE")
+    private Boolean deleted = false;
 }

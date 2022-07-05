@@ -1,10 +1,12 @@
 CREATE TABLE users
   (
-     id         BIGINT NOT NULL,
+     id         BIGSERIAL NOT NULL,
      name       VARCHAR(255),
      email      VARCHAR(255),
      nickname   VARCHAR(255),
      password   VARCHAR(255),
+     createdAt TIMESTAMP WITH TIME ZONE NOT NULL,
+     updatedAt TIMESTAMP WITH TIME ZONE NOT NULL,
      deleted    BOOLEAN NOT NULL,
      PRIMARY KEY (id)
   );

@@ -7,6 +7,7 @@ import de.lukas.imagenetwork.model.PostModify;
 import de.lukas.imagenetwork.repository.PostRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -40,6 +41,7 @@ public class PostController {
         post.setImage(postCreate.getImage());
         post.setComment(postCreate.getComment());
         post.setTitle(postCreate.getTitle());
+        post.setCreatedAt(Instant.now());
         repository.save(post);
         return "Done";
     }
@@ -53,6 +55,7 @@ public class PostController {
             post.setComment(postModify.getComment());
         if (postModify.getTitle() != null)
             post.setTitle(postModify.getTitle());
+        post.setModifiedAt(Instant.now());
         repository.save(post);
         return "Done";
     }

@@ -6,6 +6,7 @@ import de.lukas.imagenetwork.model.UserCreate;
 import de.lukas.imagenetwork.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Random;
 
@@ -36,8 +37,17 @@ public class UserController {
         user.setEmail(userCreate.getEmail());
         user.setNickname(userCreate.getNickname());
         user.setPassword(userCreate.getPassword());
+        user.setCreatedAt(Instant.now());
+        user.setUpdatedAt(user.getCreatedAt());
         repository.save(user);
         return "Done";
+    }
 
+    @DeleteMapping("/user/{id}")
+    String deleteUser(@PathVariable Long id) {
+        User user = repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        user.setDeleted(true);
+        repository.save(user);
+        return "Done";
     }
 }
