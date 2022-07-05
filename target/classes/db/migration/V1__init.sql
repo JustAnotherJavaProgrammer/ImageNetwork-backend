@@ -13,7 +13,9 @@ CREATE TABLE users
   );
 
   ALTER TABLE users
-    ADD CONSTRAINT make_unique UNIQUE (name, email, nickname, password);
+    ADD CONSTRAINT unique_emails UNIQUE (email);
+  ALTER TABLE users
+    ADD CONSTRAINT unique_nicknames UNIQUE (nickname);
   ALTER TABLE users
     ALTER COLUMN deleted SET DEFAULT FALSE;
 

@@ -1,5 +1,7 @@
+/Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/security/UserDetailsService.java
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/exception/UserNotFoundException.java
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/entity/User.java
+/Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/security/WebSecurity.java
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/exception/PostNotFoundException.java
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/entity/Friend.java
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/repository/FriendRepository.java

@@ -11,6 +11,7 @@ import java.util.List;
 public class FriendController {
     private final FriendRepository repository;
 
+
     FriendController(FriendRepository repository) {
         this.repository = repository;
     }
@@ -22,7 +23,12 @@ public class FriendController {
 
     @GetMapping("/friends/{id}")
     List<Friend> userFriends(@PathVariable Long id) {
-        return repository.findAllByUserId(id);
+
+
+        var list = repository.findAllByUserId(id);
+
+
+        return repository.findAll(list.stream().map(f -> f.getFriendId()))
     }
 
     @PostMapping("/friend")

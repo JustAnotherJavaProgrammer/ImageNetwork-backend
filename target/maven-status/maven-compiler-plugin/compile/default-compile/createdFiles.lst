@@ -9,6 +9,8 @@ de/lukas/imagenetwork/controller/FriendController.class
 de/lukas/imagenetwork/ImageNetworkBackendApplication.class
 de/lukas/imagenetwork/repository/UserRepository.class
 de/lukas/imagenetwork/exception/UserNotFoundException.class
+de/lukas/imagenetwork/security/WebSecurity.class
+de/lukas/imagenetwork/security/UserDetailsService.class
 de/lukas/imagenetwork/model/FriendCreate.class
 de/lukas/imagenetwork/model/PostModify.class
 de/lukas/imagenetwork/advice/UserNotFoundAdvice.class
