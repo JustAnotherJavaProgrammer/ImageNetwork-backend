@@ -1,42 +1,36 @@
 package de.lukas.imagenetwork.controller;
 
 import de.lukas.imagenetwork.entity.Friend;
+import de.lukas.imagenetwork.entity.User;
 import de.lukas.imagenetwork.model.FriendCreate;
 import de.lukas.imagenetwork.repository.FriendRepository;
+import de.lukas.imagenetwork.service.FriendshipService;
+import de.lukas.imagenetwork.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class FriendController {
-    private final FriendRepository repository;
 
-
-    FriendController(FriendRepository repository) {
-        this.repository = repository;
-    }
+    private final UserService userService;
+    private final FriendshipService friendshipService;
 
     @GetMapping("/friendships")
     List<Friend> all() {
-        return repository.findAll();
+        return friendshipService.getAll();
     }
 
     @GetMapping("/friends/{id}")
-    List<Friend> userFriends(@PathVariable Long id) {
-
-
-        var list = repository.findAllByUserId(id);
-
-
-        return repository.findAll(list.stream().map(f -> f.getFriendId()))
+    List<User> userFriends(@PathVariable Long id) {
+        return userService.getFriends(id);
     }
 
     @PostMapping("/friend")
     String addFriend(@RequestBody FriendCreate friendCreate) {
-        Friend friend = new Friend();
-        friend.setUserId(friendCreate.getUserId());
-        friend.setFriendId(friendCreate.getFriendId());
-        repository.save(friend);
+        friendshipService.createFriendship(friendCreate);
         return "Done";
     }
 }

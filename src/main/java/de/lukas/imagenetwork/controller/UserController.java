@@ -4,54 +4,47 @@ import de.lukas.imagenetwork.entity.User;
 import de.lukas.imagenetwork.exception.UserNotFoundException;
 import de.lukas.imagenetwork.model.UserCreate;
 import de.lukas.imagenetwork.repository.UserRepository;
+import de.lukas.imagenetwork.service.UserService;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 @RestController
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class UserController {
 
-    private final UserRepository repository;
+    private final UserService userService;
 
-    UserController(UserRepository repository) {
-        this.repository = repository;
-    }
+//    UserController(UserService userService) {
+//        this.userService = userService;
+//    }
 
     @GetMapping("/users")
     List<User> all() {
-        return repository.findAll();
+        return userService.getAll();
     }
 
     @GetMapping("/user/{id}")
     User one(@PathVariable Long id) {
-        return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return userService.getById(id);
     }
 
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     @PostMapping("/user")
-    String newUser(@RequestBody UserCreate userCreate) {
-        // User.from... ?
-        User user = new User();
-        user.setName(userCreate.getName());
-        user.setEmail(userCreate.getEmail());
-        user.setNickname(userCreate.getNickname());
-        user.setPassword("{bcrypt}" + encoder.encode(userCreate.getPassword()));
-        user.setCreatedAt(Instant.now());
-        user.setUpdatedAt(user.getCreatedAt());
-        repository.save(user);
-        return "Done";
+    Long newUser(@RequestBody UserCreate userCreate) {
+        return  userService.createUser(userCreate);
+
     }
 
     @DeleteMapping("/user/{id}")
     String deleteUser(@PathVariable Long id) {
-        User user = repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-        user.setDeleted(true);
-        repository.save(user);
+        userService.deleteUser(id);
         return "Done";
     }
 }

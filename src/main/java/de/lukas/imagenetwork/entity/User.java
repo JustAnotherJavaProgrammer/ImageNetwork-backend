@@ -1,5 +1,6 @@
 package de.lukas.imagenetwork.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -23,6 +24,7 @@ public class User implements UserDetails {
     private String name;
     private String email;
     private String nickname;
+    @JsonIgnore
     private String password; // TODO: Don't save password as plaintext
     @Column(name="createdat")
     private Instant createdAt;
@@ -34,37 +36,41 @@ public class User implements UserDetails {
 //    @ColumnDefault(value = "FALSE")
     private Boolean deleted = false;
 
+    @JsonIgnore
     @Override
     public String getPassword() {
-        if(password.startsWith("{bcrypt}"))
-            return password;
-        return "{noop}" + password;
+        return "{bcrypt}" + password;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return getName();
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true; // TODO: expiring credentials
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return !getDeleted();
