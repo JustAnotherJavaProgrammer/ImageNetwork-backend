@@ -2,10 +2,11 @@ package de.lukas.imagenetwork.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 @Data
 @NoArgsConstructor
 public class FriendCreate {
-    private Long userId;
+    @Nullable private Long userId;
     private Long friendId;
 }

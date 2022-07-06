@@ -1,6 +1,7 @@
 package de.lukas.imagenetwork.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.lukas.imagenetwork.enums.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -31,6 +32,9 @@ public class User implements UserDetails {
     @Column(name="updatedat")
     private Instant updatedAt;
 
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
+
 //    @Type(type = "org.hibernate.type.NumericBooleanType")
 //    @Column(columnDefinition = "deleted BOOLEAN DEFAULT FALSE", nullable = false)
 //    @ColumnDefault(value = "FALSE")
@@ -41,6 +45,7 @@ public class User implements UserDetails {
     public String getPassword() {
         return "{bcrypt}" + password;
     }
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();

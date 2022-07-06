@@ -1,8 +1,14 @@
 package de.lukas.imagenetwork.repository;
 
 import de.lukas.imagenetwork.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface UserRepository extends JpaRepository<User, Long> {
-    public User findByEmail(String email);
+    User findByEmail(String email);
+
+//    public Page<User> findAllById(List<Long> ids, Pageable pageable);
 }

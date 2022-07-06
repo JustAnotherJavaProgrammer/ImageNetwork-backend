@@ -8,6 +8,9 @@ import de.lukas.imagenetwork.repository.FriendRepository;
 import de.lukas.imagenetwork.repository.UserRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,22 +25,27 @@ public class UserService {
     private final UserRepository userRepository;
     private final FriendRepository friendRepository;
 
-    public List<User> getAll() {
-        return userRepository.findAll();
+//    public List<User> getAll() {
+//        return userRepository.findAll();
+//    }
+
+    public Page<User> getAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     public User getById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    public User getByEmail(String email) throws UsernameNotFoundException{
+    public User getByEmail(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
-        if(user == null)
+        if (user == null)
             throw new UsernameNotFoundException(email);
         return user;
     }
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     public Long createUser(UserCreate userCreate) {
         User user = new User();
         user.setName(userCreate.getName());
@@ -56,8 +64,14 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public List<User> getFriends(Long userId) {
+//    public List<User> getFriends(Long userId) {
+//        List<Friend> list = friendRepository.findAllByUserId(userId);
+//        return userRepository.findAllById(list.stream().map(Friend::getFriendId).toList());
+//    }
+
+    public Page<User> getFriends(Long userId, Pageable pageable) {
         List<Friend> list = friendRepository.findAllByUserId(userId);
-        return userRepository.findAllById(list.stream().map(Friend::getFriendId).toList());
+        List<User> users = userRepository.findAllById(list.stream().map(Friend::getFriendId).toList());
+        return new PageImpl<>(users.subList((int) Math.min(pageable.getOffset(), users.size()), (int) Math.min(pageable.getOffset() + pageable.getPageSize(), users.size())), pageable, (int) Math.ceil(users.size() / ((double) pageable.getPageSize())));
     }
 }

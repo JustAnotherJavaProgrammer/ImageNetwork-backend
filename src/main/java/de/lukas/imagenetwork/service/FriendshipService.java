@@ -4,6 +4,8 @@ import de.lukas.imagenetwork.entity.Friend;
 import de.lukas.imagenetwork.model.FriendCreate;
 import de.lukas.imagenetwork.repository.FriendRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +15,12 @@ import java.util.List;
 public class FriendshipService {
     private final FriendRepository friendRepository;
 
-    public List<Friend> getAll() {
-        return friendRepository.findAll();
+//    public List<Friend> getAll() {
+//        return friendRepository.findAll();
+//    }
+
+    public Page<Friend> getAll(Pageable pageable) {
+        return friendRepository.findAll(pageable);
     }
 
     public void createFriendship(FriendCreate friendCreate) {
