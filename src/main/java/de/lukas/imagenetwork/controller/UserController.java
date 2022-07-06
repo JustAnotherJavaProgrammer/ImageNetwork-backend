@@ -20,11 +20,6 @@ public class UserController {
 
     private final UserService userService;
 
-//    @GetMapping("/users")
-//    List<User> all() {
-//        return userService.getAll();
-//    }
-
     @GetMapping("/users")
     Page<User> all(Pageable pageable) {
         return userService.getAll(pageable);

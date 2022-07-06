@@ -4,10 +4,8 @@ import de.lukas.imagenetwork.entity.Post;
 import de.lukas.imagenetwork.entity.User;
 import de.lukas.imagenetwork.enums.Role;
 import de.lukas.imagenetwork.exception.IncorrectUserException;
-import de.lukas.imagenetwork.exception.PostNotFoundException;
 import de.lukas.imagenetwork.model.PostCreate;
 import de.lukas.imagenetwork.model.PostModify;
-import de.lukas.imagenetwork.repository.PostRepository;
 import de.lukas.imagenetwork.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -24,20 +20,10 @@ import java.util.Objects;
 public class PostController {
     private final PostService postService;
 
-//    @GetMapping("/posts")
-//    List<Post> all() {
-//        return postService.getAll();
-//    }
-
     @GetMapping("/posts")
     Page<Post> all(Pageable pageable) {
         return postService.getAll(pageable);
     }
-
-//    @GetMapping("/posts/{userId}")
-//    List<Post> userPosts(@PathVariable Long userId) {
-//        return postService.getAllForUser(userId);
-//    }
 
     @GetMapping("/posts/{userId}")
     Page<Post> userPosts(@PathVariable Long userId, Pageable pageable) {
