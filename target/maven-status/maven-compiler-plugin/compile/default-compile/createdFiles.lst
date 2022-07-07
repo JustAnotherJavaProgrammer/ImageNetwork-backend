@@ -4,6 +4,7 @@ de/lukas/imagenetwork/service/FriendshipService.class
 de/lukas/imagenetwork/entity/User.class
 de/lukas/imagenetwork/entity/Post.class
 de/lukas/imagenetwork/service/UserService.class
+de/lukas/imagenetwork/security/WebSecurity$1.class
 de/lukas/imagenetwork/ImageNetworkBackendApplication.class
 de/lukas/imagenetwork/advice/IncorrectRoleAdvice.class
 de/lukas/imagenetwork/model/FriendCreate.class
