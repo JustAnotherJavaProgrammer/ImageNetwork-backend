@@ -15,10 +15,6 @@ import java.util.List;
 public class FriendshipService {
     private final FriendRepository friendRepository;
 
-//    public List<Friend> getAll() {
-//        return friendRepository.findAll();
-//    }
-
     public Page<Friend> getAll(Pageable pageable) {
         return friendRepository.findAll(pageable);
     }

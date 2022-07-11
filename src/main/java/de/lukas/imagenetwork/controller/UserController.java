@@ -3,6 +3,7 @@ package de.lukas.imagenetwork.controller;
 import de.lukas.imagenetwork.entity.User;
 import de.lukas.imagenetwork.enums.Role;
 import de.lukas.imagenetwork.exception.IncorrectUserException;
+import de.lukas.imagenetwork.exception.UserNotFoundException;
 import de.lukas.imagenetwork.model.UserCreate;
 import de.lukas.imagenetwork.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -36,12 +37,17 @@ public class UserController {
 
     @GetMapping("/user")
     User currentUser(@AuthenticationPrincipal User user) {
+        if(user.getDeleted())
+            throw new UserNotFoundException(user.getId());
         return user;
     }
 
     @GetMapping("/user/{id}")
     User one(@PathVariable Long id) {
-        return userService.getById(id);
+        User user =  userService.getById(id);
+        if(user.getDeleted())
+            throw new UserNotFoundException(id);
+        return user;
     }
 
     @PostMapping("/user")

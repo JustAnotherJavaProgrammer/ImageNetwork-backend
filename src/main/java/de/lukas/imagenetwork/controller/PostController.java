@@ -4,6 +4,7 @@ import de.lukas.imagenetwork.entity.Post;
 import de.lukas.imagenetwork.entity.User;
 import de.lukas.imagenetwork.enums.Role;
 import de.lukas.imagenetwork.exception.IncorrectUserException;
+import de.lukas.imagenetwork.exception.PostNotFoundException;
 import de.lukas.imagenetwork.model.PostCreate;
 import de.lukas.imagenetwork.model.PostModify;
 import de.lukas.imagenetwork.service.PostService;
@@ -32,13 +33,16 @@ public class PostController {
 
     @GetMapping("/post/{id}")
     Post one(@PathVariable Long id) {
-        return postService.getById(id);
+        Post post = postService.getById(id);
+        if(post.getDeleted())
+            throw new PostNotFoundException(id);
+        return post;
     }
 
     // TODO: image upload
     @PostMapping("/post")
     Long createPost(@RequestBody PostCreate postCreate, @AuthenticationPrincipal User user) {
-        if(postCreate.getUserId() == null)
+        if (postCreate.getUserId() == null)
             postCreate.setUserId(user.getId());
         if (!Objects.equals(user.getId(), postCreate.getUserId()) && user.getRole() != Role.ADMIN)
             throw new IncorrectUserException(user, postCreate.getUserId());
