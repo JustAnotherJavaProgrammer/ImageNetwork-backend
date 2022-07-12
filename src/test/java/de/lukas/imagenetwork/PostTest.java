@@ -114,4 +114,30 @@ public class PostTest extends ImageNetworkBackendApplicationTests {
         assertEquals(1, getDeletedResponse.getBody().getContent().size());
         assertEquals(postId, getDeletedResponse.getBody().getContent().get(0).getId());
     }
+
+    @Test
+    public void testRecoverPost() {
+        String email = "goethe@lit.de";
+        String password = "PlitschPlatsch";
+        Long userId = createUser(email, "Johann Wolfgang von Goethe", "Wolfi", password);
+        TestRestTemplate testRestTemplate_withAuth = testRestTemplate.withBasicAuth(email, password);
+        Long postId = createPost("Some Title", "a nice image", "This post will be accidentally deleted.", email, password);
+        // Post exists?
+        ResponseEntity<Post> getResponse = testRestTemplate_withAuth.getForEntity("/post/" + postId, Post.class);
+        assertEquals(HttpStatus.OK, getResponse.getStatusCode());
+        assertNotNull(getResponse.getBody());
+        // Delete post
+        testRestTemplate_withAuth.delete("/post/" + postId);
+        // Post still exists?
+        ResponseEntity<String> secondGetResponse = testRestTemplate_withAuth.getForEntity("/post/" + postId, String.class);
+        assertEquals(HttpStatus.NOT_FOUND, secondGetResponse.getStatusCode());
+        // Recover post
+        String recoverResponse = testRestTemplate_withAuth.patchForObject("/posts/deleted/recover/" + postId, null, String.class);
+        assertEquals("Done", recoverResponse);
+        // Post exists again?
+        getResponse = testRestTemplate_withAuth.getForEntity("/post/" + postId, Post.class);
+        assertEquals(HttpStatus.OK, getResponse.getStatusCode());
+        assertNotNull(getResponse.getBody());
+        assertEquals(postId, getResponse.getBody().getId());
+    }
 }

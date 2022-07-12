@@ -39,7 +39,7 @@ public class PostController {
     @GetMapping("/post/{id}")
     Post one(@PathVariable Long id) {
         Post post = postService.getById(id);
-        if(post.getDeleted())
+        if (post.getDeleted())
             throw new PostNotFoundException(id);
         return post;
     }
@@ -69,6 +69,20 @@ public class PostController {
             postService.deletePost(id, user.getRole() == Role.ADMIN ? null : user.getId());
             return "Done";
         } catch (RuntimeException e) {
+            if (e instanceof PostNotFoundException)
+                throw e;
+            throw new IncorrectUserException(user, Long.valueOf(e.getMessage()));
+        }
+    }
+
+    @PatchMapping("/posts/deleted/recover/{id}")
+    String recover(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        try {
+            postService.recoverPost(id, user.getRole() == Role.ADMIN ? null : user.getId());
+            return "Done";
+        } catch (RuntimeException e) {
+            if (e instanceof PostNotFoundException)
+                throw e;
             throw new IncorrectUserException(user, Long.valueOf(e.getMessage()));
         }
     }

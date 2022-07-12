@@ -77,4 +77,12 @@ public class PostService {
         post.setDeleted(true);
         postRepository.save(post);
     }
+
+    public void recoverPost(Long id, @Nullable Long userId) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
+        if(userId != null && !Objects.equals(post.getUserId(), userId))
+            throw new RuntimeException(post.getUserId().toString());
+        post.setDeleted(false);
+        postRepository.save(post);
+    }
 }
