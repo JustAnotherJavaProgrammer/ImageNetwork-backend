@@ -31,6 +31,11 @@ public class PostController {
         return postService.getAllForUser(userId, pageable);
     }
 
+    @GetMapping("/posts/deleted")
+    Page<Post> userDeletedPosts(@AuthenticationPrincipal User user, Pageable pageable) {
+        return postService.getAllDeletedForUser(user.getId(), pageable);
+    }
+
     @GetMapping("/post/{id}")
     Post one(@PathVariable Long id) {
         Post post = postService.getById(id);

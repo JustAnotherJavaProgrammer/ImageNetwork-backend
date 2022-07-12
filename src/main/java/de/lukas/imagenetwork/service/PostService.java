@@ -36,6 +36,10 @@ public class PostService {
         return postRepository.findAllByUserId(userId, pageable);
     }
 
+    public Page<Post> getAllDeletedForUser(Long userId, Pageable pageable) {
+        return postRepository.findDeletedByUserId(userId, pageable);
+    }
+
     public Post getById(Long id) throws PostNotFoundException {
         return postRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
     }

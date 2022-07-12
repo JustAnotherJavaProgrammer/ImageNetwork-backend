@@ -104,7 +104,14 @@ public class PostTest extends ImageNetworkBackendApplicationTests {
         assertNotNull(getResponse.getBody());
         // Delete post
         testRestTemplate_withAuth.delete("/post/" + postId);
+        // Post still exists?
         ResponseEntity<String> secondGetResponse = testRestTemplate_withAuth.getForEntity("/post/" + postId, String.class);
         assertEquals(HttpStatus.NOT_FOUND, secondGetResponse.getStatusCode());
+        ResponseEntity<PaginatedResponse.PaginatedPosts> getDeletedResponse = testRestTemplate_withAuth.getForEntity("/posts/deleted", PaginatedResponse.PaginatedPosts.class);
+        assertEquals(HttpStatus.OK, getDeletedResponse.getStatusCode());
+        assertNotNull(getDeletedResponse.getBody());
+        assertNotNull(getDeletedResponse.getBody().getContent());
+        assertEquals(1, getDeletedResponse.getBody().getContent().size());
+        assertEquals(postId, getDeletedResponse.getBody().getContent().get(0).getId());
     }
 }

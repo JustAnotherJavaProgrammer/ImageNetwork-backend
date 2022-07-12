@@ -15,4 +15,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM posts WHERE userId = :userId AND deleted IS NOT TRUE")
     Page<Post> findAllByUserId(@Param("userId") Long userId, Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM posts WHERE userId = :userId AND deleted IS TRUE")
+    Page<Post> findDeletedByUserId(@Param("userId") Long userId, Pageable pageable);
 }
