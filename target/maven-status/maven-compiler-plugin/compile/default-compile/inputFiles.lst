@@ -23,6 +23,7 @@
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/service/UserService.java
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/repository/UserRepository.java
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/controller/FriendController.java
+/Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/model/UserPublic.java
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/model/PostModify.java
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/model/UserCreate.java
 /Users/lukas/git/ImageNetwork-backend/src/main/java/de/lukas/imagenetwork/service/PostService.java

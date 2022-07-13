@@ -2,6 +2,7 @@ de/lukas/imagenetwork/controller/UserController.class
 de/lukas/imagenetwork/advice/PostNotFoundAdvice.class
 de/lukas/imagenetwork/service/FriendshipService.class
 de/lukas/imagenetwork/entity/User.class
+de/lukas/imagenetwork/model/UserPublic.class
 de/lukas/imagenetwork/entity/Post.class
 de/lukas/imagenetwork/service/UserService.class
 de/lukas/imagenetwork/security/WebSecurity$1.class

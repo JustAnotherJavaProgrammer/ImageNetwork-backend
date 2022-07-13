@@ -1,2 +1,8 @@
 de/lukas/imagenetwork/ImageNetworkBackendApplicationTests.class
+de/lukas/imagenetwork/PaginatedResponse$PaginatedUsers.class
+de/lukas/imagenetwork/UserTest$1.class
+de/lukas/imagenetwork/FriendTest.class
+de/lukas/imagenetwork/PaginatedResponse.class
 de/lukas/imagenetwork/UserTest.class
+de/lukas/imagenetwork/PaginatedResponse$PaginatedPosts.class
+de/lukas/imagenetwork/PostTest.class

@@ -86,6 +86,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>imagenetwork-api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
