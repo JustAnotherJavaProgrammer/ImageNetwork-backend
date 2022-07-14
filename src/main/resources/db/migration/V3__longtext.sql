@@ -1,0 +1,3 @@
+ALTER TABLE posts
+    ALTER COLUMN image TYPE TEXT,
+    ALTER COLUMN comment TYPE TEXT;
